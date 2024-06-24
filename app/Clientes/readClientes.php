@@ -11,6 +11,5 @@ include_once("../conexionBD.php");
 $cliente = new Cliente($conn);
 
 $clientes = $cliente->readAll();
-
 echo json_encode($clientes);
 ?>
