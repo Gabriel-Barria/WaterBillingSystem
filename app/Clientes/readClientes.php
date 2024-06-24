@@ -1,9 +1,5 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-header('Content-Type: application/json');
+header('Content-Type: application/json;');
 
 require 'Cliente.php'; // Asegúrate de que esta clase está configurada correctamente
 
@@ -11,5 +7,9 @@ include_once("../conexionBD.php");
 $cliente = new Cliente($conn);
 
 $clientes = $cliente->readAll();
-echo json_encode($clientes);
+
+$json = json_encode($clientes, JSON_UNESCAPED_UNICODE) == false ? "{}" : json_encode($clientes, JSON_UNESCAPED_UNICODE);
+echo json_encode($json);
+
+
 ?>

@@ -11,6 +11,7 @@
                 throw new Error('Network response was not ok');
             }
             var clientes = await response.json();
+            
             populateTable(clientes);
         } catch (error) {
             console.error('Error:', error);
@@ -19,7 +20,6 @@
 
     var populateTable = (clientes) => {
         clientesTableBody.innerHTML = ''; // Clear existing rows
-
         clientes.forEach(cliente => {
             var row = document.createElement('tr');
 

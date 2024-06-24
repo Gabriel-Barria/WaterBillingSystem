@@ -20,6 +20,7 @@
 
     var populateClienteSelect = (clientes) => {
         idclienteSelect.innerHTML = ''; // Clear existing options
+        clientes = getDataJson(clientes);
         clientes.forEach(cliente => {
             var option = document.createElement('option');
             option.value = cliente.id;
@@ -168,7 +169,14 @@
 
         resetFormLectura();
     });
-
+    function getDataJson(json){
+        try {
+            let objeto = JSON.parse(json);
+            return objeto;
+        } catch (error) {
+            return {};
+        }
+    }
     // Fetch and display clients and lecturas on page load
     fetchClientesLec();
     fetchLecturas();

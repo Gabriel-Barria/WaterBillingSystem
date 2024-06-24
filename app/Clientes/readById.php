@@ -14,5 +14,6 @@ $id = $_GET['id'];
 
 $clienteIndividual = $cliente->readById($id);
 
-echo json_encode($clienteIndividual);
+$json = json_encode($clienteIndividual, JSON_UNESCAPED_UNICODE) == false ? "{}" : json_encode($clienteIndividual, JSON_UNESCAPED_UNICODE);
+echo json_encode($json);
 ?>
