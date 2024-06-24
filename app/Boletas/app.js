@@ -4,7 +4,7 @@ function generarBoleta() {
     
     // Enviar solicitud para generar boleta
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "generar_boletas.php?periodo=" + periodo, true);
+    xhr.open("GET", "Boletas/generar_boletas.php?periodo=" + periodo, true);
     xhr.onload = function() {
         if (xhr.status == 200) {
             alert("Actualización realizada con exito");
