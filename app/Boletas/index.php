@@ -12,8 +12,8 @@
         <!-- Aquí se mostrarán las boletas generadas -->
     </div>
     
-    <button onclick="generarBoleta()">Generar Nueva Boleta</button>
-    <select id="periodo" onchange="mostrarBoletas()">
+    <button id="generar-boleta-btn">Generar Nueva Boleta</button>
+    <select id="periodo">
         <?php
         // Generar opciones del combobox para el periodo desde octubre de 2023 a enero de 2030
         for ($year = 2023; $year <= date("Y"); $year++) {            
