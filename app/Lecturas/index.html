@@ -1,18 +1,21 @@
 <section id="lecturas-section">
     <h2>Lecturas</h2>
+    <button id="btn_agregar_lectura">Agregar lectura</button>
     <form id="lecturaForm" enctype="multipart/form-data">
         <input type="hidden" name="idlectura">
-        <label for="idcliente">Cliente:</label>
-        <select name="idcliente" id="idcliente" required></select>
-        <label for="lectura">Lectura:</label>
-        <input type="number" name="lectura" id="lectura" required>
         <label for="periodo">Periodo:</label>
         <input type="month" name="periodo" id="periodo" required>
-        <label for="fotoMedidor">Foto del Medidor:</label>
-        <input type="file" name="fotoMedidor" id="fotoMedidor" accept="image/*">
-        <div class="form-buttons">
-            <button type="submit">Guardar</button>
-            <button type="button" onclick="resetForm()">Cancelar</button>
+        <div id="formulario_datos_cliente" style="display: none;">            
+            <label for="idcliente">Cliente:</label>
+            <select name="idcliente" id="idcliente" required></select>
+            <label for="lectura">Lectura:</label>
+            <input type="number" name="lectura" id="lectura" required>        
+            <label for="fotoMedidor">Foto del Medidor:</label>
+            <input type="file" name="fotoMedidor" id="fotoMedidor" accept="image/*">
+            <div class="form-buttons">
+                <button type="submit">Guardar</button>
+                <button type="button" onclick="resetForm()">Cancelar</button>
+            </div>
         </div>
     </form>
 

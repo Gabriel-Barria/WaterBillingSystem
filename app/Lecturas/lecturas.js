@@ -5,16 +5,24 @@ class LecturasManager {
         this.formTitle = document.getElementById('formTitleCli');
         this.isEditMode = false;
         this.idclienteSelect = document.getElementById('idcliente');
-
+        this.btnAddLectura = document.getElementById("btn_agregar_lectura");
+        this.contenedorForm = document.getElementById("formulario_datos_cliente");
+        this.updatePeriodo();
         this.fetchClienteSelect();
         this.fetchLecturas();
         
+        this.btnAddLectura.addEventListener("click", this.showForm.bind(this))
         this.lecturaForm.addEventListener('submit', this.handleFormSubmit.bind(this));
+        this.lecturaForm.periodo.addEventListener("change", this.changePeriodo.bind(this));
     }
-    
+    changePeriodo(){
+        this.fetchClienteSelect();
+        this.fetchLecturas();
+    }    
     async fetchClienteSelect() {
+        let periodo = this.lecturaForm.periodo.value;
         try {
-            const response = await fetch('../Clientes/readClientes.php');
+            const response = await fetch(`../Clientes/readClientesByPeriodo.php?periodo=${periodo}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -26,8 +34,9 @@ class LecturasManager {
     }
 
     async fetchLecturas() {
+        let periodo = this.lecturaForm.periodo.value;
         try {
-            const response = await fetch('./Lecturas/readLecturas.php');
+            const response = await fetch(`./Lecturas/readLecturas.php?periodo=${periodo}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -36,6 +45,14 @@ class LecturasManager {
         } catch (error) {
             console.error('Error:', error);
         }
+    }
+    showForm(){
+        this.contenedorForm.style.display = "block";
+        this.btnAddLectura.style.display = "none";
+    }
+    hideForm(){
+        this.contenedorForm.style.display = "none";
+        this.btnAddLectura.style.display = "block";
     }
 
     populateTableLectura(lecturas) {
@@ -109,6 +126,7 @@ class LecturasManager {
         this.lecturaForm.idcliente.value = lectura.idcliente;
         this.lecturaForm.lectura.value = lectura.lectura;
         this.lecturaForm.periodo.value = lectura.periodo.substring(0, 7);
+        this.showForm();
     }
 
     resetForm() {
@@ -128,6 +146,8 @@ class LecturasManager {
             if (result.success) {
                 alert('Lectura creada exitosamente');
                 this.fetchLecturas(); // Refresh table after creation
+                this.fetchClienteSelect();
+                this.hideForm();
             } else {
                 alert('Error: ' + result.error);
             }
@@ -147,6 +167,8 @@ class LecturasManager {
             if (result.success) {
                 alert('Lectura actualizada exitosamente');
                 this.fetchLecturas(); // Refresh table after update
+                this.fetchClienteSelect();
+                this.hideForm();
             } else {
                 alert('Error: ' + result.error);
             }
@@ -164,6 +186,7 @@ class LecturasManager {
             if (result.success) {
                 alert('Lectura eliminada exitosamente');
                 this.fetchLecturas(); // Refresh table after deletion
+                this.fetchClienteSelect();
             } else {
                 alert('Error: ' + result.error);
             }
@@ -183,6 +206,20 @@ class LecturasManager {
         }
     
         this.resetForm();
+    }
+    updatePeriodo(){
+        // Obtener la fecha actual
+        let fechaActual = new Date();
+
+        // Obtener el año y el mes
+        let year = fechaActual.getFullYear();
+        let month = (fechaActual.getMonth() + 1).toString().padStart(2, '0'); // Añadir 1 porque los meses empiezan desde 0
+
+        // Formatear la fecha en 'YYYY-MM'
+        let periodoActual = `${year}-${month}`;
+
+        // Asignar el valor formateado
+        this.lecturaForm.periodo.value = periodoActual;
     }
 }
 

@@ -7,13 +7,13 @@ require 'Lectura.php';
 
 // Configuración de la base de datos
 include_once("../conexionBD.php");
-
+$periodo = $_REQUEST["periodo"];
 try {
     // Crear instancia de la clase Lectura
     $lectura = new Lectura($conn);
 
     // Obtener todas las lecturas
-    $lecturas = $lectura->readAll();
+    $lecturas = $lectura->readAllByPeriodo($periodo);
 
     // Devolver las lecturas en formato JSON
     echo json_encode($lecturas);

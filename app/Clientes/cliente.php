@@ -35,5 +35,12 @@ class Cliente {
         $stmt = $this->pdo->query("SELECT id, CONCAT(nombres, ' ', apellidos) as nombre_completo FROM clientes");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function readAllWithPeriodo($periodo){
+        $sql = "SELECT id, CONCAT(nombres, ' ', apellidos) as nombre_completo FROM clientes WHERE id NOT IN (SELECT idcliente FROM lecturas WHERE periodo = :periodo)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':periodo', $periodo, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

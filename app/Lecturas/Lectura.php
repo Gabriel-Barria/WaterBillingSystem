@@ -32,6 +32,18 @@ class Lectura {
         ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function readAllByPeriodo($periodo) {
+        $sql = "
+            SELECT l.idlectura, CONCAT(c.nombres, ' ', c.apellidos) AS nombre_cliente, l.lectura, l.periodo, l.fechahora, l.fotoMedidor 
+            FROM lecturas l
+            JOIN clientes c ON l.idcliente = c.id
+            WHERE l.periodo = :periodo
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':periodo', $periodo, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function update($idlectura, $idcliente, $lectura, $periodo, $fotoMedidor) {
         $stmt = $this->pdo->prepare("UPDATE lecturas SET idcliente = ?, lectura = ?, periodo = ?, fotoMedidor = ? WHERE idlectura = ?");
