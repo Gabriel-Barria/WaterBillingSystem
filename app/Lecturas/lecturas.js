@@ -94,7 +94,7 @@ class LecturasManager {
             const actionsCell = document.createElement('td');
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Eliminar';
-            deleteButton.addEventListener('click', () => this.deleteLectura(lectura.idlectura));
+            deleteButton.addEventListener('click', () => this.delete(lectura.idlectura));
             actionsCell.appendChild(deleteButton);
     
             const editButton = document.createElement('button');
