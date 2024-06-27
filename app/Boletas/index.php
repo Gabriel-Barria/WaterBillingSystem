@@ -32,6 +32,10 @@
         }
         ?>
     </select>
+    <select name="estado" id="estado">
+        <option value="true">Pagado</option>
+        <option value="false">Sin Pagar</option>
+    </select>
     <div id="tabla-boletas">
         <!-- Tabla para mostrar las boletas generadas -->
     </div>

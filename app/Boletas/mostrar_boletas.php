@@ -1,6 +1,7 @@
 <?php
 if (isset($_GET['periodo'])) {
     $periodo = $_GET['periodo'];
+    $pagado = $_GET["estado"] == "true" ? true : false;
 
     // Conexión a la base de datos
     include_once("../conexionBD.php");
@@ -10,10 +11,11 @@ if (isset($_GET['periodo'])) {
             FROM boletas b 
             INNER JOIN lecturas l ON b.idlectura = l.idlectura 
             INNER JOIN clientes c ON c.id = l.idcliente
-            WHERE l.periodo = :periodo";
+            WHERE l.periodo = :periodo AND b.pagado = :pagado";
 
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':periodo', $periodo, PDO::PARAM_STR);
+    $stmt->bindParam(':pagado', $pagado, PDO::PARAM_STR);
     $stmt->execute();
 
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
