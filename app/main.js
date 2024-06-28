@@ -1,6 +1,5 @@
-import LecturasManager from './Lecturas/lecturas.js';
-import ClientesManager from './Clientes/clientes.js';
-import BoletasManager from './Boletas/boletas.js';
+import { instances } from './instances.js';
+import { handleInstanceCreation } from './handleInstanceCreation.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const lecturasLink = document.getElementById('lecturas-link');
@@ -19,13 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const content = await response.text();
             const name = url.split("/")[1].toLowerCase();
             mainContent.innerHTML = content;
-    
+
             // Remueve el script existente si existe
             const existingScript = document.querySelector(`#script_${name}`);
             if (existingScript) {
                 existingScript.remove();
             }
-    
+
             // Crea un nuevo script dinámicamente
             const script = document.createElement("script");
             script.id = `script_${name}`;
@@ -35,27 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Usa el objeto de mapeo para crear la instancia correspondiente
                 handleInstanceCreation(name);
             };
-    
+
             // Agrega el script al cuerpo del documento
             document.body.appendChild(script);
         } catch (error) {
             console.error('Error:', error);
         }
     };
-    const handleInstanceCreation = (name) => {
-        const className = {
-            "lecturas": LecturasManager,
-            "clientes": ClientesManager,
-            "boletas" : BoletasManager
-            // Agrega más mapeos según sea necesario
-        };
-    
-        if (className[name]) {
-            new className[name]();
-        } else {
-            console.warn(`No hay gestor definido para ${name}`);
-        }
-    };
+
     const loadHeaderFooter = async () => {
         const headerResponse = await fetch('./Plantillas/header.html');
         const headerContent = await headerResponse.text();
@@ -81,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sidebar.classList.remove('open');
         }
     });
+
     boletasLink.addEventListener('click', (e) => {
         e.preventDefault();
         loadContent('./Boletas/index.php');
@@ -92,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     menuToggle.addEventListener('click', () => {
         sidebar.classList.toggle('open');
     });
+
     function capitalizeText(text) {
         return text.toLowerCase().replace(/^(.)|\s+(.)/g, function($1) { return $1.toUpperCase(); });
     }

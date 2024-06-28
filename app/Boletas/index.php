@@ -6,6 +6,8 @@
     <title>Lista de Boletas</title>
 </head>
 <body>
+    <link rel="stylesheet" href="../Components/modals/styles.css">
+    
     <h1>Lista de Boletas</h1>
     
     <div id="boletas-lista">
@@ -36,8 +38,25 @@
         <option value="true">Pagado</option>
         <option value="false">Sin Pagar</option>
     </select>
+    <button id="btn_pagar_boletas" disabled = "true" class="open-modal" data-modal-target="#modal1">Pagar</button>
     <div id="tabla-boletas">
         <!-- Tabla para mostrar las boletas generadas -->
     </div>
+    <!--MODALS-->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal-target="#modal1">&times;</span>
+            <h2>Elegir Forma de pago</h2>
+            <div class="forma-pago-container">
+                <label for="formaPagoSelect">Forma de pago</label>
+                <select name="formaPagoSelect" id="formaPagoSelect">
+                    <option value="1">EFECTIVO</option>
+                    <option value="2">TRANSFERENCIA</option>
+                </select>
+                <button>PAGAR</button>
+            </div>
+        </div>
+    </div>
 </body>
+<script src="../Components/modals/modals.js"></script>
 </html>

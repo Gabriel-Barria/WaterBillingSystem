@@ -1,14 +1,17 @@
+import { instances } from '../instances.js';
 class BoletasManager {
     constructor() {
         this.periodoSelect = document.getElementById('periodo');
         this.tablaBoletas = document.getElementById('tabla-boletas');
         this.generarBoletaBtn = document.getElementById('generar-boleta-btn');
         this.estado = document.getElementById("estado");
-
+        this.btnPagarBoletas = document.getElementById("btn_pagar_boletas");
+        this.modalManager = instances['boletas']?.find(instance => instance.constructor.name === 'ModalManager');
         this.generarBoletaBtn.addEventListener('click', this.generarBoleta.bind(this));
         this.periodoSelect.addEventListener('change', this.mostrarBoletas.bind(this));
         this.estado.addEventListener("change", this.changeState.bind(this));
-        
+        this.btnPagarBoletas.addEventListener("click", this.pagar.bind(this));
+
         this.mostrarBoletas(); // Mostrar boletas al cargar la página
     }
 
@@ -44,6 +47,35 @@ class BoletasManager {
     }
     changeState(){
         this.mostrarBoletas();
+        this.addDisabledBtnPagar();
+       
+    }
+    addDisabledBtnPagar(){
+        if(this.estado.value == "true"){
+            this.btnPagarBoletas.disabled = true;
+        }else{
+            this.btnPagarBoletas.disabled = false;
+        }
+    }
+    pagar(event){
+        event.preventDefault();
+        let boletas = this.getBoletasSelected();
+        if(boletas.length > 0){
+            this.modalManager.openModal(event);
+        }else{
+            alert("Debe seleccionar una opción para pagar");
+        }
+
+    }
+    getBoletasSelected(){
+        let elementsChecked = document.querySelectorAll(".boleta_registro:checked");
+
+        let valuesArray = Array.from(elementsChecked)
+        .map(element => element.value)   // Obtén el valor de cada elemento
+        .filter(value => !isNaN(value) && Number.isInteger(parseFloat(value))); // Filtra solo los valores que son números enteros
+    
+
+        return valuesArray;
     }
 }
 export default BoletasManager;

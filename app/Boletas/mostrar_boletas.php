@@ -7,7 +7,7 @@ if (isset($_GET['periodo'])) {
     include_once("../conexionBD.php");
 
     // Consulta para obtener las boletas del periodo deseado
-    $sql = "SELECT CONCAT(c.nombres, ' ', c.apellidos) AS nombrecompleto, b.monto, l.periodo, l.fotomedidor 
+    $sql = "SELECT CONCAT(c.nombres, ' ', c.apellidos) AS nombrecompleto, b.monto, l.periodo, l.fotomedidor, b.idboleta
             FROM boletas b 
             INNER JOIN lecturas l ON b.idlectura = l.idlectura 
             INNER JOIN clientes c ON c.id = l.idcliente
@@ -22,10 +22,11 @@ if (isset($_GET['periodo'])) {
 
     if (count($result) > 0) {
         echo "<table border='1'>";
-        echo "<tr><th>Nombre</th><th>Monto</th><th>Periodo</th><th>Foto Medidor</th></tr>";
+        echo "<tr><th>Check</th><th>Nombre</th><th>Monto</th><th>Periodo</th><th>Foto Medidor</th></tr>";
 
         foreach ($result as $row) {
             echo "<tr>";
+            echo "<td><input type='checkbox' class='boleta_registro' id='".$row['idboleta']."' value='".$row['idboleta']."'/></td>";
             echo "<td>" . htmlspecialchars($row['nombrecompleto'], ENT_QUOTES, 'UTF-8') . "</td>";
             echo "<td> $ " . number_format($row['monto'], 0, ',', '.') . "</td>";
             echo "<td>" . htmlspecialchars($row['periodo'], ENT_QUOTES, 'UTF-8') . "</td>";
