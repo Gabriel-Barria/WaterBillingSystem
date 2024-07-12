@@ -28,10 +28,6 @@ class ClientesManager {
         clientes.forEach(cliente => {
             const row = document.createElement('tr');
 
-            const idCell = document.createElement('td');
-            idCell.textContent = cliente.id;
-            row.appendChild(idCell);
-
             const nombresCell = document.createElement('td');
             nombresCell.textContent = cliente.nombres;
             row.appendChild(nombresCell);

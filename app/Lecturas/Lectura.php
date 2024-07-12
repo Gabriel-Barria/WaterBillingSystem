@@ -37,7 +37,7 @@ class Lectura {
             SELECT l.idlectura, CONCAT(c.nombres, ' ', c.apellidos) AS nombre_cliente, l.lectura, l.periodo, l.fechahora, l.fotoMedidor 
             FROM lecturas l
             JOIN clientes c ON l.idcliente = c.id
-            WHERE l.periodo = :periodo
+            WHERE l.periodo = :periodo ORDER BY c.nombres, c.apellidos ASC
         ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':periodo', $periodo, PDO::PARAM_STR);

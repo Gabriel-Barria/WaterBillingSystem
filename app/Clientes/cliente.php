@@ -12,7 +12,7 @@ class Cliente {
     }
 
     public function read() {
-        $stmt = $this->pdo->query("SELECT * FROM clientes");
+        $stmt = $this->pdo->query("SELECT * FROM clientes ORDER BY nombres ASC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -32,11 +32,11 @@ class Cliente {
         $stmt->execute([$id]);
     }
     public function readAll() {
-        $stmt = $this->pdo->query("SELECT id, CONCAT(nombres, ' ', apellidos) as nombre_completo FROM clientes");
+        $stmt = $this->pdo->query("SELECT id, CONCAT(nombres, ' ', apellidos) as nombre_completo FROM clientes ORDER BY nombres ASC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function readAllWithPeriodo($periodo){
-        $sql = "SELECT id, CONCAT(nombres, ' ', apellidos) as nombre_completo FROM clientes WHERE id NOT IN (SELECT idcliente FROM lecturas WHERE periodo = :periodo)";
+        $sql = "SELECT id, CONCAT(nombres, ' ', apellidos) as nombre_completo FROM clientes WHERE id NOT IN (SELECT idcliente FROM lecturas WHERE periodo = :periodo) ORDER BY nombres ASC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':periodo', $periodo, PDO::PARAM_STR);
         $stmt->execute();

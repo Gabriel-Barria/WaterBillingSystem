@@ -61,10 +61,6 @@ class LecturasManager {
         lecturas.forEach(lectura => {
             const row = document.createElement('tr');
     
-            const idlecturaCell = document.createElement('td');
-            idlecturaCell.textContent = lectura.idlectura;
-            row.appendChild(idlecturaCell);
-    
             const idclienteCell = document.createElement('td');
             idclienteCell.textContent = lectura.nombre_cliente;
             row.appendChild(idclienteCell);
@@ -77,19 +73,9 @@ class LecturasManager {
             periodoCell.textContent = lectura.periodo;
             row.appendChild(periodoCell);
     
-            const fechahoraCell = document.createElement('td');
-            fechahoraCell.textContent = lectura.fechahora;
-            row.appendChild(fechahoraCell);
-    
-            const fotoMedidorCell = document.createElement('td');
-            if (lectura.fotoMedidor) {
-                const img = document.createElement('img');
-                img.src = lectura.fotoMedidor;
-                img.alt = 'Foto del Medidor';
-                img.width = 100;
-                fotoMedidorCell.appendChild(img);
-            }
-            row.appendChild(fotoMedidorCell);
+            // const fechahoraCell = document.createElement('td');
+            // fechahoraCell.textContent = lectura.fechahora;
+            // row.appendChild(fechahoraCell);
     
             const actionsCell = document.createElement('td');
             const deleteButton = document.createElement('button');
@@ -101,11 +87,29 @@ class LecturasManager {
             editButton.textContent = 'Editar';
             editButton.addEventListener('click', () => this.showEditFormLectura(lectura));
             actionsCell.appendChild(editButton);
+
+            const showPhoto = document.createElement('button');
+            showPhoto.textContent = 'Editar';
+            showPhoto.addEventListener('click', () => this.showPhoto(lectura.fotoMedidor));
+            actionsCell.appendChild(showPhoto);
+
     
             row.appendChild(actionsCell);
     
             this.tableLecturas.appendChild(row);
         });
+    }
+    showPhoto(linkPhoto){
+        console.log(linkPhoto);
+        // const fotoMedidorCell = document.createElement('td');
+        // if (lectura.fotoMedidor) {
+        //     const img = document.createElement('img');
+        //     img.src = `Lecturas/${lectura.fotoMedidor}`;
+        //     img.alt = 'Foto del Medidor';
+        //     img.width = 100;
+        //     fotoMedidorCell.appendChild(img);
+        // }
+        // row.appendChild(fotoMedidorCell);
     }
 
     populateClienteSelect(clientes) {
