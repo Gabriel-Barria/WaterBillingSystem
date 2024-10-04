@@ -1,7 +1,7 @@
 <?php
 $host = "db";
 $username = "root";
-$password = "n1a2x3o4";
+$password = "123456";
 $dbname = "clientes_db";
 $port = 3306;
 
